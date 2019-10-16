@@ -32,16 +32,14 @@ func init() {
 		log.Fatalln(err)
 	}
 	// step 4: use convenience function called ConfigFromJSON to convert json file to struct
-	googleOauthConfig, err = google.ConfigFromJSON(b, auth.UserinfoEmailScope)
+	googleOauthConfig, err = google.ConfigFromJSON(b, auth.UserinfoEmailScope, auth.UserinfoProfileScope)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	// step 5: add the profile scope as well
-	googleOauthConfig.Scopes = append(googleOauthConfig.Scopes, "https://www.googleapis.com/auth/userinfo.profile")
 }
 
 func main() {
-	// step 6: define handlers for each endpoint, one for login, one for callback and one for index
+	// step 5: define handlers for each endpoint, one for login, one for callback and one for index
 	http.HandleFunc("/", handleIndex)
 	http.HandleFunc("/login", handleLogin)
 	http.HandleFunc("/callback", handleRedirectAndShowUserInfo)
